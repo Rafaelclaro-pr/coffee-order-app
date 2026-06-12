@@ -1,11 +1,8 @@
 package com.example.pizza2.Activity
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.pizza2.Domain.ItemsModel
 import com.example.pizza2.Helper.ManagmentCart
@@ -13,16 +10,17 @@ import com.example.pizza2.R
 import com.example.pizza2.databinding.ActivityDetailBinding
 
 class DetailActivity : AppCompatActivity() {
-    lateinit var binding: ActivityDetailBinding
+    private lateinit var binding: ActivityDetailBinding
     private lateinit var item: ItemsModel
     private lateinit var managmentCart: ManagmentCart
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding= ActivityDetailBinding.inflate(layoutInflater)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        managmentCart= ManagmentCart(this)
+        managmentCart = ManagmentCart(this)
 
         bundle()
         initSizeList()
@@ -30,62 +28,58 @@ class DetailActivity : AppCompatActivity() {
 
     private fun initSizeList() {
         binding.apply {
-            smallBtn.setOnClickListener{
-
-            smallBtn.setBackgroundColor(R.drawable.brown_storke_bg)
-            mediumBtn.setBackgroundColor(0)
-            largeBtn.setBackgroundColor(0)
+            smallBtn.setOnClickListener {
+                smallBtn.setBackgroundResource(R.drawable.brown_storke_bg)
+                mediumBtn.setBackgroundResource(0)
+                largeBtn.setBackgroundResource(0)
             }
-            mediumBtn.setOnClickListener{
-
-                smallBtn.setBackgroundColor(0)
-                mediumBtn.setBackgroundColor(R.drawable.brown_storke_bg)
-                largeBtn.setBackgroundColor(0)
+            mediumBtn.setOnClickListener {
+                smallBtn.setBackgroundResource(0)
+                mediumBtn.setBackgroundResource(R.drawable.brown_storke_bg)
+                largeBtn.setBackgroundResource(0)
             }
-            largeBtn.setOnClickListener{
-
-                smallBtn.setBackgroundColor(0)
-                mediumBtn.setBackgroundColor(0)
-                largeBtn.setBackgroundColor(R.drawable.brown_storke_bg)
+            largeBtn.setOnClickListener {
+                smallBtn.setBackgroundResource(0)
+                mediumBtn.setBackgroundResource(0)
+                largeBtn.setBackgroundResource(R.drawable.brown_storke_bg)
             }
         }
     }
 
+    @Suppress("DEPRECATION")
     private fun bundle() {
+        item = intent.getSerializableExtra("object") as ItemsModel
+        item.numberInCart = 1
+
         binding.apply {
-            item=intent.getSerializableExtra("object") as ItemsModel
-
             Glide.with(this@DetailActivity)
-                .load(item.picUrl)
-                .into(binding.picMain)
+                .load(item.picUrl[0])
+                .into(picMain)
 
-            titleBtn.text=item.title
-            descriptionTxt.text=item.description
-            valueTxt.text="$"+item.price
-            ratingTxt.text=item.rating.toString()
+            titleBtn.text = item.title
+            descriptionTxt.text = item.description
+            valueTxt.text = "$${item.price}"
+            ratingTxt.text = item.rating.toString()
+            numberInCartTxt.text = item.numberInCart.toString()
 
             addToCartBtn.setOnClickListener {
-                item.numberInCart=Integer.valueOf(
-                    numberInCartTxt.text.toString()
-
-                )
+                item.numberInCart = numberInCartTxt.text.toString().toIntOrNull() ?: 1
                 managmentCart.insertItems(item)
-
             }
-            backBtn.setOnClickListener{ finish()}
 
-            plusBtn.setOnClickListener{
-                numberInCartTxt.text=(item.numberInCart + 1).toString()
+            backBtn.setOnClickListener { finish() }
+
+            plusBtn.setOnClickListener {
                 item.numberInCart++
+                numberInCartTxt.text = item.numberInCart.toString()
             }
-            minusBtn.setOnClickListener{
-                if(item.numberInCart>0){
-                    numberInCartTxt.text=(item.numberInCart - 1).toString()
+
+            minusBtn.setOnClickListener {
+                if (item.numberInCart > 1) {
                     item.numberInCart--
+                    numberInCartTxt.text = item.numberInCart.toString()
                 }
             }
-
-
         }
     }
 }

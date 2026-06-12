@@ -7,24 +7,15 @@ import com.example.pizza2.Domain.CategoryModel
 import com.example.pizza2.Domain.ItemsModel
 import com.example.pizza2.Repository.MainRepository
 
-class MainViewModel: ViewModel() {
-    private val repository= MainRepository()
+class MainViewModel : ViewModel() {
+    private val repository = MainRepository()
 
-    fun loadBanner(): LiveData<MutableList<BannerModel>>{
-        return repository.loadBanner()
-    }
+    fun loadBanner(): LiveData<MutableList<BannerModel>> = repository.loadBanner()
 
-    fun loadCategory():LiveData<MutableList<CategoryModel>>{
-        return repository.loadCategory()
-    }
+    fun loadCategory(): LiveData<MutableList<CategoryModel>> = repository.loadCategory()
 
-    fun loadPopular():LiveData<MutableList<ItemsModel>>{
-        return repository.loadPopular()
-    }
+    fun loadPopular(): LiveData<MutableList<ItemsModel>> = repository.loadPopular()
 
-    fun loadItems(categoryId:String):LiveData<MutableList<ItemsModel>>{
-        return repository.loadItemCategory(categoryId)
-    }
-
-
+    fun loadItems(categoryId: String): LiveData<MutableList<ItemsModel>> =
+        repository.loadItemCategory(categoryId)
 }
