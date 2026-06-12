@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">pizza2</string>
+    <string name="choise_your_nfavorite_cofee">choise_your_nfavorite_cofee</string>
+    <string name="choise_your_nfavorite_coffee">Choise your \nFavorite Coffee</string>
+    <string name="get_started">Get Started</string>
+    <string name="tina_anderson">Tina Anderson</string>
+    <string name="search_anything">Search anything...</string>
+    <string name="cart">Cart</string>
+    <string name="explorer">Explorer</string>
+    <string name="wishlist">Wishlist</string>
+    <string name="myorder">MyOrder</string>
+    <string name="profile">Profile</string>
+    <string name="coffee_size">Coffee Size</string>
+    <string name="qty">Qty.</string>
+    <string name="Description">Description</string>
+</resources>
